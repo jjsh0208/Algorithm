@@ -1,45 +1,50 @@
 import java.util.HashMap;
 import java.util.HashSet;
 
+//중복 경로는 최종 길이에 포함하지않는다.
+// 해시셋 사용
 class Solution {
     
+    private static final HashMap<Character,int[]> location = new HashMap<>();
+
     private static boolean isValidMove(int nx, int ny){
         return 0 <= nx && nx < 11 && 0 <= ny && ny < 11;
     }
-    
+        
     private static void initLocation(){
         location.put('U', new int[]{0,1});
         location.put('D', new int[]{0,-1});
-        location.put('R', new int[]{1,0});
         location.put('L', new int[]{-1,0});
+        location.put('R', new int[]{1,0});
     }
     
-    
-    private static HashMap<Character,int[]> location = new HashMap<>();
-    
     public int solution(String dirs) {
+        initLocation();
         
-        initLocation(); 
+        // 시작 좌표
+        int x = 5, y = 5;
         
-        HashSet<String> set = new HashSet<>(); // 중복된 경로 제거
-        
-        int x = 5 , y = 5;
+        //겹치는 좌표를 처리할 HashSet
+        HashSet<String> answer = new HashSet<>(); 
         
         for(int i = 0; i < dirs.length(); i++){
-            int[] offSet = location.get(dirs.charAt(i));
+            int[] offset = location.get(dirs.charAt(i));
             
-            int nx = x + offSet[0];
-            int ny = y + offSet[1];
+            int nx = x + offset[0];
+            int ny = y + offset[1];
             
-            if(!isValidMove(nx,ny)) continue;
+            if(!isValidMove(nx,ny)){
+                continue;
+            }
             
-            set.add(x + " " +  y + " " + nx + " " + ny);
-            set.add(nx + " " +  ny + " " + x + " " + y);
+            answer.add(x + " " + y + " " + nx + " " + ny);
+            answer.add(nx + " " + ny + " " + x + " " + y);
             
             x = nx;
             y = ny;
-        }
     
-        return set.size() / 2;
+        }
+        
+        return answer.size() / 2;
     }
 }

@@ -5,19 +5,19 @@ class Solution {
         
         Stack<Character> stack = new Stack<>();
         
-        char[] chars = s.toCharArray();
-        
-        for(char c : chars){
-            if(c == '('){
-                stack.push(c);
+        for(int i = 0; i < s.length(); i++){
+            char item = s.charAt(i);
+            
+            if(item == '('){
+                stack.push(item);
             }else{
-                if(stack.isEmpty() || stack.pop() == c){
-                    return false;
-                }
-            }
+                if(stack.isEmpty() || stack.pop() == item){
+                    return false;  
+                } 
+            } 
+              
         }
         
-    
         return stack.isEmpty();
     }
 }

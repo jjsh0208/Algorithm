@@ -6,30 +6,27 @@ class Solution {
         
         ArrayDeque<String> card1Deque = new ArrayDeque<>(Arrays.asList(cards1));
         ArrayDeque<String> card2Deque = new ArrayDeque<>(Arrays.asList(cards2));
+        
         ArrayDeque<String> goalDeque = new ArrayDeque<>(Arrays.asList(goal));
+      
         
-        // goal큐가 비어있지않는 동안 반복
         while(!goalDeque.isEmpty()){
-            
-            //
-            if(!card1Deque.isEmpty() && card1Deque.peekFirst().equals(goalDeque.peekFirst())){
-                goalDeque.pollFirst();
+            if(!card1Deque.isEmpty() && card1Deque.peek().equals(goalDeque.peek())){
                 card1Deque.pollFirst();
-            }
-            else if(!card2Deque.isEmpty() && card2Deque.peekFirst().equals(goalDeque.peekFirst())){
                 goalDeque.pollFirst();
+            }else if(!card2Deque.isEmpty() && card2Deque.peek().equals(goalDeque.peek())){
                 card2Deque.pollFirst();
-            }
-            else {
+                goalDeque.pollFirst();
+            }else{
                 break;
-            } 
+            }
         }
-        
+    
         if(goalDeque.isEmpty()){
             return "Yes";
-        } else{
+        }else{
             return "No";
         }
-
+    
     }
 }

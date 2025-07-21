@@ -11,8 +11,8 @@ public class Main {
 		
 		int n = Integer.parseInt(br.readLine());
 
-		int[] road = new int[n - 1];
-		int[] city = new int[n];
+		long[] road = new long[n - 1];
+		long[] city = new long[n];
 
 		st = new StringTokenizer(br.readLine());
 		for(int i = 0; i < road.length; i++){
@@ -24,8 +24,8 @@ public class Main {
 			city[i] = Integer.parseInt(st.nextToken());
 		}
 
-		int answer = 0;
-		int min = city[0];
+		long answer = 0;
+		long min = city[0];
 		
 		// 현재 기름값이 다음 기름 값보다 작은지 비교
 		// 다음 기름값이 더 싸면 현재 기름값으로 다음 거리만큼 구매

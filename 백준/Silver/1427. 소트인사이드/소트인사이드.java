@@ -1,32 +1,48 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.Arrays;
-import java.util.Collections;
 
-public class Main {
+public class Main {    
 
-    public static void main(String[] args) throws IOException{
+    static String n;
+    static int[] arr;
+
+    public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        StringBuilder sb = new StringBuilder();
 
-        String t = br.readLine();
+        n = br.readLine();
 
-        Integer[] ary = new Integer[t.length()];
 
-        for (int i = 0; i < ary.length; i++) {
-            ary[i] = t.charAt(i) - '0';
+        arr = new int[n.length()];
+
+        for(int i = 0; i < n.length(); i++){
+            arr[i] = Integer.parseInt(n.substring(i , i + 1));
         }
-        
-        Arrays.sort(ary, Collections.reverseOrder());
 
-        
-        for (int i : ary) {
-            sb.append(i);
+        for(int i = 0; i < arr.length; i++){
+            
+            int max = i;
+
+            for(int j = i + 1; j < arr.length; j++){
+                if( arr[j] > arr[max])
+                    max = j;
+            }
+
+            if(arr[i] < arr[max]){
+                int temp = arr[i];
+                arr[i] = arr[max];
+                arr[max] = temp;
+            }
         }
-        System.out.println(sb);
     
+
+        for(int i : arr){
+            System.out.print(i);
+        }
+
+
         br.close();
 
     }
-}
+
+} 

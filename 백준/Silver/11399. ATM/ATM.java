@@ -1,41 +1,55 @@
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
-import java.util.Arrays;
 import java.util.StringTokenizer;
 
-public class Main {
+public class Main {    
 
-    public static void main(String[] args) throws IOException {        
+    static int n;
+    static int[] arr;
+
+    public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
-        StringTokenizer st = new StringTokenizer(br.readLine());
-        int n = Integer.parseInt(st.nextToken());
-        int sum = 0;
-        int prev  = 0;
-        int[] ary = new int[n];
 
-        st = new StringTokenizer(br.readLine()," ");
-        
-        for (int i = 0; i < n; i++) {
-            ary[i] = Integer.parseInt(st.nextToken());
+        n = Integer.parseInt(br.readLine());
+        arr = new int[n];
+
+        StringTokenizer st= new StringTokenizer(br.readLine());
+
+        for(int i = 0; i < n; i++){
+            arr[i] = Integer.parseInt(st.nextToken());
         }
 
-        Arrays.sort(ary);
+        for(int i = 1; i < n; i++){
 
-        for (int i = 0; i < n; i++) {
-            sum += prev + ary[i];
+            int temp = arr[i];
 
-            prev += ary[i];
+            int j = i - 1;
 
+            while(j >= 0 && arr[j] > temp){
+                arr[j + 1] = arr[j];
+                j--;
+            }
+            
+            arr[j + 1] = temp;
         }
-        bw.write(String.valueOf(sum));
-
-        bw.flush();
-        bw.close();
-        br.close();
         
+        int[] answer = new int[n];
+        answer[0] = arr[0];
+
+        for(int i = 1; i < n; i++){
+            answer[i] = answer[i - 1] + arr[i];
+        }
+        
+        int result = 0;
+        for(int i : answer){
+            result += i;
+        }
+
+        System.out.println(result);
+
+        br.close(); 
+
     }
-}
+
+} 

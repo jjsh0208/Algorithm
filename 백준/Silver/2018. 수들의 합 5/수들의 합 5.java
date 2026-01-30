@@ -2,38 +2,34 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-public class Main {    
 
-    static int n , sum , answer , startIndex , endIndex;
-    static int arr[];
+public class Main {
 
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        
-        n = Integer.parseInt(br.readLine());
-        // n은 이미 조회해서 하나를 만족하니까 1 부터 시작
-        startIndex = 1;
-        endIndex = 1;
-        answer = 1;
-        sum = 1;
 
-        while(endIndex != n){
+        int n = Integer.parseInt(br.readLine());
 
-            if(sum == n){
-                answer++;
-                endIndex++;
-                sum += endIndex;
-            }
-            else if(sum > n){
-                sum -= startIndex;
-                startIndex++;
-            }
-            else{
-                endIndex++;
-                sum += endIndex;
+        int start = 1;
+        int end = 1;
+        int count = 1;
+        int sum = 1;
+
+        while(end != n){
+            if(sum == n){ // 연속 합이 n과 같은 경우
+                count++;
+                end++;
+                sum += end;
+            } else if(sum > n){ // 현재 연속 합이 n보다 큰 경우
+                sum -= start;
+                start++;
+            } else if(sum < n){ // 현재 연속 합이 n보다 작은 경우
+                end++;
+                sum += end;
             }
         }
 
-        System.out.println(answer);
+        System.out.println(count);
     }
+
 }

@@ -4,30 +4,26 @@ import java.io.InputStreamReader;
 import java.util.LinkedList;
 import java.util.Queue;
 
-public class Main {    
+public class Main {
 
-    static int n;
-    static Queue<Integer> queue;
-
-    public static void main(String[] args) throws IOException {
+    public static void main (String[] args) throws IOException{
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
-        queue = new LinkedList<>();
-        n = Integer.parseInt(br.readLine());
+        int n = Integer.parseInt(br.readLine());
 
-        for(int i = 0; i < n ; i++){
-            queue.add(i);
+        Queue<Integer> queue = new LinkedList<>();
+
+        for(int i = 1; i <= n; i++){
+            queue.offer(i);
         }
 
         while(queue.size() != 1){
             queue.poll();
-            queue.add(queue.poll());
+            queue.offer(queue.poll());
         }
 
-        System.out.println(queue.poll() + 1);
+        System.out.println(queue.poll());
 
         br.close();
-
     }
-
-} 
+}

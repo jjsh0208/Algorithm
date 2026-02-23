@@ -3,89 +3,79 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.StringTokenizer;
 
-public class Main {    
+public class Main {
 
-    public static int[] A, temp;
-    public static long result;
-    
-    public static void main(String[] args) throws IOException {
+    static int[] arr , temp;
+    static int n;
+    static long cnt;
+
+    public static void main (String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
-        // 배열의 크기
-        int N = Integer.parseInt(br.readLine());
+        n = Integer.parseInt(br.readLine()); // 배열 크기
 
-        A = new int[N + 1];
-        temp = new int[N + 1];
+        arr = new int[n + 1];
+        temp = new int[n + 1];
 
         StringTokenizer st = new StringTokenizer(br.readLine());
-        for(int i = 1; i <= N; i++){
-            A[i] = Integer.parseInt(st.nextToken());
+        for(int i = 1; i <= n; i++){
+            arr[i] = Integer.parseInt(st.nextToken());
         }
 
-        // 처음부터 배열의 마지막 까지 정렬 
-        result = 0;
-        mergetSort(1,N);
+        cnt = 0;
+        mergeSort(1, n );
 
-        System.out.println(result);
+        System.out.println(cnt);
+
         br.close();
     }
 
-
-   private static void mergetSort(int start, int end) {
-        // start == end 이거나 (원소 1개) 
-        // start > end (잘못된 범위)일 경우 재귀 종료
-        if (end - start < 1) {
-            return;
+    private static void mergeSort(int s, int e) {
+        if(s < e){
+            int m = (s + e) / 2;
+            mergeSort(s,m);
+            mergeSort(m + 1, e);
+            merge(s,e,m);
         }
 
-        // 현재 구간의 중간 인덱스 계산
-        // start + (end - start) / 2 형태를 쓰면 큰 수에서도 오버플로우 방지
-        int m = start + (end - start) / 2;
+    }
 
-        // 왼쪽 절반 정렬
-        mergetSort(start, m); 
-        // 오른쪽 절반 정렬
-        mergetSort(m + 1, end);
+    private static void merge(int s, int e, int m) {
+        int i = s; // 왼쪽 포인터
+        int j =  m + 1; //오른쪽 포인터
+        int t_index = 1; // temp의 인덱스
 
-        // 현재 구간의 값을 임시 배열 temp에 복사
-        for (int i = start; i <= end; i++) {
-            temp[i] = A[i];
-        }
+        while(i <= m && j <= e){
+            if(arr[i] <= arr[j]){
+                temp[t_index++] = arr[i];
+                i++;
+            }else{ // 뒤 쪽 데이터값이 더 적은 경우
+                // 현재 j의 값이 왼쪽 값보다 더 작다는건
+                // 왼쪽 배열은 이미 오름차순이라는 의미이다.
+                // 그래서 그 뒤에 있는 수들 보다도 j가 무조건 작다
+                // 현재 시점에서 남은 왼쪽 배열의 수를 카운트 해준다.
 
-        int k = start;     // 병합된 값을 A에 채워 넣을 인덱스
-        int index1 = start; // 왼쪽 그룹의 현재 인덱스
-        int index2 = m + 1; // 오른쪽 그룹의 현재 인덱스
-
-        // 두 그룹 모두 남아 있는 동안 반복
-        // 각 그룹의 현재 원소를 비교해 더 작은 값을 A[k]에 저장
-        while (index1 <= m && index2 <= end) {
-            if (temp[index1] > temp[index2]) {
-                A[k] = temp[index2];
-                result = result + index2 - k;
-                index2++;
-
-            } else {
-                A[k] = temp[index1];
-                index1++;
-
+                cnt += (m - i + 1); // 왼쪽의 남아있는 수들을 더 해준다
+                temp[t_index++] = arr[j];
+                j++;
             }
-            k++;
         }
 
-        // 왼쪽 그룹이 남아 있는 경우 모두 복사
-        while (index1 <= m) {
-            A[k] = temp[index1];
-            index1++;
-            k++;
-
+        //남은 데이터 정리
+        while(i <= m){
+            temp[t_index++] = arr[i++];
         }
 
-        // 오른쪽 그룹이 남아 있는 경우 모두 복사
-        while (index2 <= end) {
-            A[k] = temp[index2];
-            index2++;
-            k++;
-
+        while(j <= e){
+            temp[t_index++] = arr[j++];
         }
+
+        i = s;
+        t_index = 1;
+
+        while(i <= e){
+            arr[i++] = temp[t_index++];
+        }
+
     }
 }

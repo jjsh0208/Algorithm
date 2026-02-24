@@ -1,59 +1,53 @@
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.StringTokenizer;
+import java.io.*;
+import java.util.*;
 
 public class Main {
 
-    static int N, M;
-    static ArrayList<Integer>[] A;
+    static int n,m; // 노드와 에지 수
+    static ArrayList<Integer>[] arr;
     static boolean[] visited;
 
-    public static void main(String[] args) throws Exception {
+    public static void main (String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+
         StringTokenizer st = new StringTokenizer(br.readLine());
-        
-        N = Integer.parseInt(st.nextToken());
-        M = Integer.parseInt(st.nextToken());
+        n = Integer.parseInt(st.nextToken());
+        m = Integer.parseInt(st.nextToken());
 
-        A = new ArrayList[N + 1];
-        visited = new boolean[N + 1];
+        arr = new ArrayList[n + 1];
+        visited = new boolean[n + 1];
 
-        for(int i = 1; i <= N; i++){
-            A[i] = new ArrayList<Integer>();
+        for(int i = 1; i < n + 1; i++){
+            arr[i] = new ArrayList<>();
         }
 
-        for(int i = 0; i < M; i++){
+        for(int i = 0; i < m; i++){
             st = new StringTokenizer(br.readLine());
-
             int s = Integer.parseInt(st.nextToken());
             int e = Integer.parseInt(st.nextToken());
-
-            A[s].add(e); // 양방향 이므로 양쪽 에지 추가
-            A[e].add(s);
+            arr[s].add(e); // 양방향 그래프이므로 양쪽 다 연결
+            arr[e].add(s);
         }
+        br.close();
 
         int cnt = 0;
-
-        for(int i = 1; i < N + 1; i++){
+        for(int i = 1; i < n + 1; i++){
             if(!visited[i]){
                 cnt++;
                 DFS(i);
             }
         }
-
         System.out.println(cnt);
+
     }
 
-
-    private static void DFS(int v){
+    private static void DFS(int v) {
         if(visited[v]){
             return;
         }
-
         visited[v] = true;
-        for(int i : A[v]){
-            if(visited[i] == false){
+        for(int i : arr[v]){
+            if(!visited[i]){
                 DFS(i);
             }
         }

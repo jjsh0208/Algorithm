@@ -1,53 +1,46 @@
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.*;
+import java.util.ArrayList;
+import java.util.StringTokenizer;
 
-public class Main{
+public class Main {
 
-    private static int[] ary; //체스판
-    private static int n; //입력받을 변수
-    private static int cnt = 0; //확인용 카운트
+    static int n, cnt;
+    static int[] map; // 체스판
 
-    public static void main(String[] args) throws NumberFormatException, IOException{
+    public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        
-        n = Integer.parseInt(br.readLine());
-        ary = new int[n];
-        
 
-        nQueen(0);
-        System.out.println(cnt);        
+        n = Integer.parseInt(br.readLine());
+
+        map = new int[n];
+        cnt = 0;
+
+        backtracking(0);
+
+        System.out.println(cnt);
     }
 
-    private static void nQueen(int depth) {
-        
-        if (depth == n) { //입력받은 크기와 같으면 반환 (체스판의 크기 만큼 (가로, 세로))
+    private static void backtracking(int row) {
+        if(row == n){
             cnt++;
             return;
         }
 
-        for (int i = 0; i < n; i++) {
-
-            ary[depth] = i;
-
-            if (Possibility(depth)) {
-                nQueen(depth + 1);
+        for(int i = 0; i < n; i++){
+            map[row] = i;
+            if(check(row)){
+                backtracking(row + 1);
             }
-            
         }
-
     }
 
-    private static boolean Possibility(int col) {
-        
-        for (int i = 0; i < col; i++) {
-            if (ary[col] == ary[i]) {
-                return false;
-            }else if (Math.abs(col - i) == Math.abs(ary[col] - ary[i])) {
-                return false;
-            }
+    private static boolean check(int row) {
+        for(int i = 0; i < row; i++){
+            if(map[i] == map[row]) return false;
+            if(Math.abs(row - i) == Math.abs(map[i] - map[row])) return false;
         }
-
         return true;
     }
+
+
 }

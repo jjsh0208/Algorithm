@@ -1,32 +1,38 @@
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-
-import java.util.PriorityQueue;
+import java.io.*;
+import java.util.*;
 
 public class Main {
-	public static void main(String[] args) throws IOException {
-		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-		int n = Integer.parseInt(br.readLine());
 
-		PriorityQueue<Integer> priorityQueue = new PriorityQueue<>();
+    static int n;
+    static int[] arr;
 
-		for(int i = 0; i < n; i++){
-			int x = Integer.parseInt(br.readLine());
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        n = Integer.parseInt(br.readLine());
 
-			priorityQueue.offer(x);
-		}
+        PriorityQueue<Integer> queue = new PriorityQueue<>();
 
-		int sum = 0;
-		while(priorityQueue.size() > 1){
-			int a = priorityQueue.poll();
-			int b = priorityQueue.poll();
+        for(int i = 0; i < n; i++){
+            queue.offer(Integer.parseInt(br.readLine()));
+        }
+        
+        int sum = 0;
+        while(queue.size() != 1){
+            int num1 = queue.poll();
+            int num2 = queue.poll();
 
-			sum += (a + b);
-			priorityQueue.offer(a+b);
-		}
+            sum += num1 + num2;
+            queue.offer(num1 + num2);
+        }
 
-		System.out.println(sum);
-		br.close();
-	}
+        System.out.println(sum);
+        //(10 +20 ) + (30 + 40)
+
+
+    }
+
+
 }
+
+
+

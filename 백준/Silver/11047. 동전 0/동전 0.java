@@ -1,43 +1,35 @@
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.StringTokenizer;
+import java.io.*;
+import java.util.*;
 
 public class Main {
 
-    public static void main(String[] args) throws IOException {        
+    static int n, k;
+    static int[] arr;
+
+    public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
-        StringTokenizer st = new StringTokenizer(br.readLine(), " ");
+        StringTokenizer st = new StringTokenizer(br.readLine());
+        n = Integer.parseInt(st.nextToken());
+        k = Integer.parseInt(st.nextToken());
 
-        int n = Integer.parseInt(st.nextToken());
-        int t = Integer.parseInt(st.nextToken());
-        int cnt = 0;
-        Integer[] k = new Integer[n];
+        arr = new int[n];
 
-        for (int i = 0; i < k.length; i++) {
-            k[i] = Integer.parseInt(br.readLine());
+        for(int i = 0; i <n; i++){
+            arr[i] = Integer.parseInt(br.readLine());
         }
-        Arrays.sort(k, Collections.reverseOrder());
-        for (Integer integer : k) {
-            if (t == 0) {
-                break;
-            }
-            if (integer > t) {
-                continue;
-            }
-            cnt += t / integer;
-            t %= integer;
-        }
-        bw.write(String.valueOf(cnt));
 
-        bw.flush();
-        bw.close();
-        br.close();
-        
+        int answer = 0;
+        for(int i = n - 1; i >= 0; i--){
+            answer += k / arr[i];
+
+            k %= arr[i];
+        }
+
+        System.out.println(answer);
     }
+
+
 }
+
+
+

@@ -1,49 +1,36 @@
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
-import java.util.Arrays;
-import java.util.StringTokenizer;
+import java.io.*;
+import java.util.*;
 
 public class Main {
 
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
-        StringTokenizer st = new StringTokenizer(br.readLine(), " ");
+        StringTokenizer st = new StringTokenizer(br.readLine());
 
-        int n = Integer.parseInt(st.nextToken());
         int m = Integer.parseInt(st.nextToken());
+        int n = Integer.parseInt(st.nextToken());
 
-        boolean[] isPrime = sieveOfEratosthenes(m);
+        int[] arr = new int[n + 1];
 
-        for (int i = n; i <= m; i++) {
-            if (isPrime[i]) {
-                bw.write(String.valueOf(i));
-                bw.newLine();
+        for(int i = 2; i <= n; i++){
+            arr[i] = i;
+        }
+
+        for(int i = 2; i <= Math.sqrt(n); i++) { // 2부터 n의 제곱근 까지
+            if (arr[i] == 0) {
+                continue;
+            }
+
+            // i 자신을 제외한 i의 배수를 모두 0으로 변경
+            for (int j = i + i; j <= n; j = j + i) {
+                arr[j] = 0;
             }
         }
 
-        bw.flush();
-        bw.close();
-        br.close();
-    }
-
-    public static boolean[] sieveOfEratosthenes(int max) {
-        boolean[] isPrime = new boolean[max + 1];
-        Arrays.fill(isPrime, true);
-        isPrime[0] = false;
-        isPrime[1] = false;
-
-        for (int i = 2; i * i <= max; i++) {
-            if (isPrime[i]) {
-                for (int j = i * i; j <= max; j += i) {
-                    isPrime[j] = false;
-                }
+        for(int i = m; i <= n; i++){
+            if(arr[i] != 0){
+                System.out.println(arr[i]);
             }
         }
-
-        return isPrime;
     }
 }

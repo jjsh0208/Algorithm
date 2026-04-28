@@ -1,32 +1,30 @@
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
 
 class Solution {
-
-    private final HashMap<String,Integer> map = new HashMap<>();
     
     public int solution(String[][] clothes) {
         
-        initMap(clothes);
-     
-        return totalCase(map.values().toArray(new Integer[0]));
-    }
-    
-    
-    private void initMap(String[][] clothes){
-         for(String[] c : clothes){
-            map.put(c[1] , map.getOrDefault(c[1],0) + 1);   
-        }
-    }
-    
-    
-    private int totalCase(Integer[] counts){
-        int totalCase = 1;
-        for(int cnt : counts){
+        HashMap<String,Integer> map = new HashMap<>();
+        int answer = 1;
+        
+        for(String[] item  : clothes){
+      
+            String type = item[1];
             
-            totalCase *= (cnt + 1);
+            map.put(type, map.getOrDefault(type, 0) + 1);    
         }
         
-        return totalCase - 1;
+        for(int value: map.values()){
+      
+            answer *= (value + 1);    
+        }
+        
+       return answer - 1;
     }
+    
+    
+  
+    
     
 }

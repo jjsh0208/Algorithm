@@ -1,21 +1,19 @@
-import java.util.*;
-import java.util.stream.IntStream;
+import java.util.Arrays;
 
 class Solution {
     public int solution(int[] citations) {
+        Arrays.sort(citations);
         
-        citations = IntStream.of(citations)
-           .boxed() // int -> Integer 변환
-                .sorted(Collections.reverseOrder()) // 내림차순 정렬
-                .mapToInt(Integer::intValue) // Integer -> int 변환
-                .toArray();
+        int n = citations.length;
         
-        for(int i = 0; i < citations.length; i++){
-            if(citations[i] < i + 1){
-               return i;
-            }
+        for(int i = 0; i < n; i++){
+            int h = n - i;
             
-        }    
-        return citations.length;
+            if(citations[i] >= h){
+                return h;
+            }
+        }
+        
+        return 0;
     }
 }

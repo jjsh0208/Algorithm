@@ -1,13 +1,21 @@
 class Solution {
     public int solution(int[][] sizes) {
-        int a = 0;
-        int b = 0;
-        for (int i = 0; i < sizes.length; i++) {
-            int A = Math.max(sizes[i][0], sizes[i][1]);
-            int B = Math.min(sizes[i][0], sizes[i][1]);
-            a = Math.max(a, A);
-            b = Math.max(b, B);
+        int answer = 0;
+        
+        int width = 0;
+        int hight = 0;
+        
+        // 긴 변들 중에 큰 값
+        // 짧은 변들 중에 큰 값
+        
+        for(int i = 0; i < sizes.length; i++){
+            int w = Math.max(sizes[i][0] , sizes[i][1]);
+            int h = Math.min(sizes[i][0] , sizes[i][1]);
+            
+            width = Math.max(width, w);
+            hight = Math.max(hight, h);
         }
-        return  a * b;
+        
+        return width * hight;
     }
 }

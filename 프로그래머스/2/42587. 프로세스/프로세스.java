@@ -1,31 +1,40 @@
-import java.util.*;
+import java.util.Queue;
+import java.util.LinkedList;
 
 class Solution {
     public int solution(int[] priorities, int location) {
+        Queue<int[]> queue = new LinkedList<>();
         
-        // 우선 순위 큐 ( 내림 차순 )
-        PriorityQueue<Integer> queue = new PriorityQueue<>(Collections.reverseOrder());
-        int answer = 0;
-        
-        for (int i  : priorities) {
-            queue.offer(i);
+        for(int i = 0; i < priorities.length; i++){
+            queue.add(new int[]{i,priorities[i]});
         }
         
-        
-        while(!queue.isEmpty()){   
-            for(int i = 0; i < priorities.length; i++){
-                if(priorities[i] == queue.peek()){
-                    queue.poll();
-                    answer++;
-                    
-                    if(location == i){
-                        return answer;
-                    }
+        int cnt = 0;
+        while(!queue.isEmpty()){
+            int[] current = queue.poll();
+            boolean check = false;
+            
+            for(int[] i : queue){
+                if(i[1] > current[1]){
+                    check = true;
+                    break;
                 }
             }
-        }
-        
 
-        return answer;
+                   
+            if(check){
+                queue.add(current);
+            }else{
+                cnt++;
+                if(current[0] == location){
+                    return cnt;
+                }
+            }
+            
+           
+        }
+     
+         
+        return 1;
     }
 }

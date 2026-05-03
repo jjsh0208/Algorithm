@@ -5,19 +5,21 @@ import java.util.ArrayList;
 class Solution {
     public int[] solution(int[] progresses, int[] speeds) {
         Queue<Integer> queue = new LinkedList<>();
+        
         ArrayList<Integer> answer = new ArrayList<>();
         
         for(int i = 0; i < progresses.length; i++){
             int day = (int)Math.ceil((double)(100 - progresses[i]) / speeds[i]);
             
-            queue.add(day);    
-        }
+            queue.add(day);
+        } 
         
         while(!queue.isEmpty()){
-            int cnt = 1;
             int day = queue.poll();
             
-            while(!queue.isEmpty() && queue.peek() <= day){
+            int cnt = 1;
+            
+            while(!queue.isEmpty() && day >= queue.peek()){
                 queue.poll();
                 cnt++;
             }
@@ -25,8 +27,6 @@ class Solution {
             answer.add(cnt);
         }
         
-
         return answer.stream().mapToInt(i -> i).toArray();
-    
     }
 }

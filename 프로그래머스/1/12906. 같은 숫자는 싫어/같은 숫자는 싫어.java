@@ -1,16 +1,27 @@
-import java.util.Stack;
+import java.util.Deque;
+import java.util.LinkedList;
 
 public class Solution {
-    public Stack<Integer> solution(int []arr) {
-     
-        Stack<Integer> stack = new Stack<>();
+    public int[] solution(int []arr) {
         
-        stack.push(arr[0]);
-        for(int i : arr){
-            if(i != stack.peek()){
-                stack.push(i);
+        Deque<Integer> queue = new LinkedList<>();
+        
+        queue.add(arr[0]);
+        
+        for(int i = 1; i < arr.length; i++){
+            
+            if(!queue.isEmpty() && queue.getLast() != arr[i]){
+                queue.add(arr[i]);
             }
         }
-        return stack;
+
+        int[] answer = new int[queue.size()];
+        
+        for(int i = 0; i < answer.length; i++){
+            answer[i] = queue.poll();
+        }
+        
+        
+        return answer;
     }
 }
